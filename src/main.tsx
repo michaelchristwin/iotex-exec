@@ -32,7 +32,7 @@ const projectId = import.meta.env.VITE_PROJECT_ID;
 createWeb3Modal({
   ethersConfig: defaultConfig({
     metadata,
-    defaultChainId: 4689,
+    defaultChainId: 4690,
     enableEIP6963: true,
     enableInjected: true,
     enableCoinbase: true,
