@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare let window: any;
+import { Transaction } from "ethers";
 import { BrowserProvider } from "ethers";
 
 export async function getProvider() {
@@ -13,11 +14,13 @@ export async function getProvider() {
 export const execTx = async () => {
   try {
     const provider = await getProvider();
-
     if (provider) {
-      await provider.send("eth_sendRawTransaction", [
-        "0xf8a58085174876e800830186a08080b853604580600e600039806000f350fe7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf31ba02222222222222222222222222222222222222222222222222222222222222222a02222222222222222222222222222222222222222222222222222222222222222",
-      ]);
+      const signer = await provider.getSigner();
+      const tx = Transaction.from(
+        "0xf8a58085174876e800830186a08080b853604580600e600039806000f350fe7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf31ba02222222222222222222222222222222222222222222222222222222222222222a02222222222222222222222222222222222222222222222222222222222222222"
+      );
+
+      signer.sendTransaction({ ...tx, data: tx.data });
     }
   } catch (err) {
     console.error("Tx failed", err);
